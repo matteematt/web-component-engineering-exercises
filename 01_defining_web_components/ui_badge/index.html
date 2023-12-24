@@ -9,7 +9,40 @@
     <link href="index.css" rel="stylesheet" />
   </head>
   <body>
-    <ui-badge></ui-badge>
     <script type="module" src="index.js"></script>
+    <ui-badge style="--badge-color: green">
+      <p>Hello</p>
+    </ui-badge>
+    <ui-badge>
+      <p>Test</p>
+      <span slot="badge">Alert!</span>
+    </ui-badge>
+    <template id="ui-badge">
+      <style>
+        :host {
+          --badge-color: red;
+          display: block;
+          border: 1px black solid;
+          border-radius: 4px;
+          max-width: 20%;
+          position: relative;
+          margin: 10px;
+          padding: 5px;
+        }
+
+        span#badge {
+          border: 1px var(--badge-color) solid;
+          background-color: var(--badge-color);
+          border-radius: 15px;
+          margin: 2px;
+          padding: 2px;
+          position: absolute;
+          right: -5px;
+          top: -5px;
+        }
+      </style>
+      <span id="badge"><slot name="badge">1</slot></span>
+      <slot></slot>
+    </template>
   </body>
 </html>
