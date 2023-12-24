@@ -5,17 +5,25 @@ class MyCounter extends HTMLElement {
 	static observedAttributes = ["count"];
 	#countDisplay = null;
 
-  constructor() {
-    super();
-    this.attachShadow({ mode: "open" });
-  }
+	constructor() {
+		super();
+		this.attachShadow({ mode: "open" });
+	}
 
 	connectedCallback() {
 		if (this.#view === null) {
 			this.#view = this.#createView();
 			this.shadowRoot.appendChild(this.#view);
+			this.#countDisplay = this.shadowRoot.getElementById("count");
 		}
 		this.#countChanged();
+		this.shadowRoot.getElementById('dec').addEventListener('click', this.#countDownHandler.bind(this));
+		this.shadowRoot.getElementById('inc').addEventListener('click', this.#countUpHandler.bind(this));
+	}
+
+	disconnectedCallback() {
+		this.shadowRoot.getElementById('dec').removeEventListener('click', this.#countDownHandler.bind(this));
+		this.shadowRoot.getElementById('inc').removeEventListener('click', this.#countDownHandler.bind(this));
 	}
 
 	attributeChangedCallback(name, oldValue, newValue) {
@@ -25,10 +33,21 @@ class MyCounter extends HTMLElement {
 	}
 
 	#countChanged() {
-		if (this.#countDisplay == null) {
-			this.#countDisplay = this.shadowRoot.getElementById("count");
+		if (this.#countDisplay) {
+			this.#countDisplay.textContent = this.getAttribute("count") ?? "0";
 		}
-		this.#countDisplay.textContent = this.getAttribute("count");
+	}
+
+	#countUpHandler() {
+		this.#countHandler((count) => parseInt(count, 10) + 1);
+	}
+
+	#countDownHandler() {
+		this.#countHandler((count) => parseInt(count, 10) - 1);
+	}
+
+	#countHandler(fn) {
+		this.setAttribute("count", fn(this.getAttribute("count") ?? "0"));
 	}
 
 	#createView() {
