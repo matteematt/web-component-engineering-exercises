@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <base href="/" />
+    <title>Example</title>
+
+    <link href="index.css" rel="stylesheet" />
+  </head>
+  <body>
+    <my-counter></my-counter>
+    <my-counter count="3"></my-counter>
+    <script type="module" src="index.js"></script>
+    <template id="my-counter">
+      <style>
+        :host {
+          display: inline-block;
+          border: 1px solid black;
+          border-radius: 4px;
+          margin: 0 5px;
+        }
+      </style>
+      <div>
+        <button id="dec">-</button>
+        <span id="count"></span>
+        <button id="inc">+</button>
+      </div>
+    </template>
+  </body>
+</html>
