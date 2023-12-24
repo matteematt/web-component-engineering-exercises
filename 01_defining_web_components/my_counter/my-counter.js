@@ -1,8 +1,8 @@
-class MyComponent extends HTMLElement {
+class MyCounter extends HTMLElement {
   constructor() {
     super();
     this.attachShadow({ mode: "open" }).innerHTML = "Hello World!";
   }
 }
 
-customElements.define("my-component", MyComponent);
+customElements.define("my-counter", MyCounter);

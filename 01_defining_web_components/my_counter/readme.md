@@ -21,5 +21,14 @@ If you wish to submit your exercise solution for review:
     * The module and exercise you are submitting.
     * A link to the GitHub repo where the exercise is located.
     * A statement indicating that you are ok with your code being video-reviewed and the review being shared with other students and/or on YouTube or other video platforms.
-  
+
 > Submitting an exercise does not guarantee that your solution will be reviewed. Only a small number of student exercises can be reviewed due to limited time and availability. If your submission is selected, you will be notified of the selection as well as when the review is posted.
+
+### Task
+
+Counter Component
+1. Build a <my-counter> custom element.
+2. It should have one observable attribute named count.
+3. When the count changes, render the latest value to the Shadow DOM.
+4. In the Shadow DOM, provide increment and decrement buttons to change the count.
+
