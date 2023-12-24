@@ -10,6 +10,14 @@
   </head>
   <body>
     <my-counter></my-counter>
+    <my-counter count="3"></my-counter>
     <script type="module" src="index.js"></script>
+    <template id="my-counter">
+      <div>
+        <button id="dec">-</button>
+        <span id="count"></span>
+        <button id="inc">+</button>
+      </div>
+    </template>
   </body>
 </html>
