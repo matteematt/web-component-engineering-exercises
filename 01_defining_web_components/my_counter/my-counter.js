@@ -8,6 +8,8 @@ class MyCounter extends HTMLElement {
 	constructor() {
 		super();
 		this.attachShadow({ mode: "open" });
+		this.countDownH = this.#countDownHandler.bind(this);
+		this.countUpH = this.#countUpHandler.bind(this);
 	}
 
 	connectedCallback() {
@@ -17,13 +19,13 @@ class MyCounter extends HTMLElement {
 			this.#countDisplay = this.shadowRoot.getElementById("count");
 		}
 		this.#countChanged();
-		this.shadowRoot.getElementById('dec').addEventListener('click', this.#countDownHandler.bind(this));
-		this.shadowRoot.getElementById('inc').addEventListener('click', this.#countUpHandler.bind(this));
+		this.shadowRoot.getElementById('dec').addEventListener('click', this.countDownH);
+		this.shadowRoot.getElementById('inc').addEventListener('click', this.countUpH);
 	}
 
 	disconnectedCallback() {
-		this.shadowRoot.getElementById('dec').removeEventListener('click', this.#countDownHandler.bind(this));
-		this.shadowRoot.getElementById('inc').removeEventListener('click', this.#countDownHandler.bind(this));
+		this.shadowRoot.getElementById('dec').removeEventListener('click', this.countDownH);
+		this.shadowRoot.getElementById('inc').removeEventListener('click', this.countUpH);
 	}
 
 	attributeChangedCallback(name, oldValue, newValue) {
