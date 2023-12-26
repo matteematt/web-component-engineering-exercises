@@ -23,22 +23,61 @@ const styles = `
 `;
 
 class UiPager extends HTMLElement {
-  constructor() {
-    super();
-		this.attachShadow({mode: "open"})
-			.innerHTML = `<style>${styles}</style>${template}`;
+  static observedAttributes = ["page-count", "current-page", "button-count"];
+
+  set pageCount(value) {
+    this.setAttribute("page-count", value);
+  }
+  get pageCount() {
+    return this.getAttribute("page-count");
   }
 
-	connectedCallback() {
-		this.#configureChildren();
+  set currentPage(value) {
+    this.setAttribute("current-page", value);
+  }
+  get currentPage() {
+    return this.getAttribute("current-page");
+  }
+
+  set buttonCount(value) {
+    this.setAttribute("button-count", value);
+  }
+  get buttonCount() {
+    this.getAttribute("button-count");
+  }
+
+  constructor() {
+    super();
+    this.attachShadow({ mode: "open" }).innerHTML =
+      `<style>${styles}</style>${template}`;
+  }
+
+  connectedCallback() {
+    this.#configureChildren();
+    this.#processPages();
+  }
+
+	attributeChangedCallback(name, oldValue, newValue) {
+		this.#processPages();
 	}
 
-	#configureChildren() {
-		const pageContainers = this.querySelectorAll("ui-page");
-		pageContainers.forEach((uiPage) => {
-			uiPage.slot = "contents";
-		})
-	}
+  #processPages() {
+    const lowerBound = parseInt(this.currentPage || "0");
+    const upperBound = lowerBound + parseInt(this.pageCount || "2");
+    const predicateShow = (index) => index >= lowerBound && index < upperBound;
+    const innerPages = this.children;
+
+    Array.from(innerPages).forEach((page, index) => {
+      page.hidden = !predicateShow(index);
+    });
+  }
+
+  #configureChildren() {
+    const pageContainers = this.querySelectorAll("ui-page");
+    pageContainers.forEach((uiPage) => {
+      uiPage.slot = "contents";
+    });
+  }
 }
 
 customElements.define("ui-pager", UiPager);
