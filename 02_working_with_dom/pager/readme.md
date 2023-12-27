@@ -33,3 +33,8 @@ current-page - Tracks the current page.
 button-count - Indicates how many page buttons to display before switching to ellipses.
 The component should render previous and next buttons, page buttons, and highlight the current page.
 The component should raise events when the page has changed.
+
+## Remarks
+There are a number of improvements which could be made, but I feel I wouldn't get any extra web components knowledge I feel is worthwhile from completing them
+* Better styling
+* Improving the page numbers by having one at the start and end and ellipses between gaps
