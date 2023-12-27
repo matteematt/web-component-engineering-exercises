@@ -126,6 +126,9 @@ class UiPager extends HTMLElement {
       button.innerText = index + 1;
       button.addEventListener("click", this);
       button.setAttribute("data-page", index);
+      if ((this.currentPage || "0") == index) {
+        button.style.color = "red";
+      }
       controlDiv.appendChild(button);
     }
   }
