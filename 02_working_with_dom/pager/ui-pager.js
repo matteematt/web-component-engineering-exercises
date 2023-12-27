@@ -22,10 +22,16 @@ const styles = `
 	}
 `;
 
+const eventOptions = {
+  bubbles: true,
+  composed: true,
+  cancelable: true,
+};
+
 class UiPager extends HTMLElement {
   static observedAttributes = ["page-count", "current-page", "button-count"];
 
-	// should have made the IDL attributes integers in javascript
+  // should have made the IDL attributes integers in javascript
   set pageCount(value) {
     this.setAttribute("page-count", value);
   }
@@ -61,6 +67,7 @@ class UiPager extends HTMLElement {
   }
 
   handleEvent(event) {
+    const pageBeforeEvent = this.currentPage;
     switch (event.target.id) {
       case "previous":
         this.currentPage = Math.max(0, parseInt(this.currentPage || "0") - 1);
@@ -78,7 +85,11 @@ class UiPager extends HTMLElement {
         this.currentPage =
           event.target.getAttribute("data-page") ||
           (console.warn("Invalid page"), "0");
-				this.#processPages();
+        this.#processPages();
+    }
+
+    if (pageBeforeEvent !== this.currentPage) {
+      this.dispatchEvent(new CustomEvent("page-change", eventOptions));
     }
   }
 
