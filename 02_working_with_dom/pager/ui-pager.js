@@ -50,6 +50,8 @@ class UiPager extends HTMLElement {
     super();
     this.attachShadow({ mode: "open" }).innerHTML =
       `<style>${styles}</style>${template}`;
+    this.shadowRoot.getElementById("previous").addEventListener("click", this);
+    this.shadowRoot.getElementById("next").addEventListener("click", this);
   }
 
   connectedCallback() {
@@ -57,9 +59,26 @@ class UiPager extends HTMLElement {
     this.#processPages();
   }
 
-	attributeChangedCallback(name, oldValue, newValue) {
-		this.#processPages();
-	}
+  handleEvent(event) {
+    switch (event.target.id) {
+      case "previous":
+        this.currentPage = Math.max(0, parseInt(this.currentPage || "0") - 1);
+        this.#processPages();
+        break;
+      case "next":
+        const pageCount = Array.from(this.children).length;
+        this.currentPage = Math.min(
+          Math.max(0, pageCount - 1),
+          parseInt(this.currentPage || "0") + 1,
+        );
+        this.#processPages();
+        break;
+    }
+  }
+
+  attributeChangedCallback(name, oldValue, newValue) {
+    this.#processPages();
+  }
 
   #processPages() {
     const lowerBound = parseInt(this.currentPage || "0");
