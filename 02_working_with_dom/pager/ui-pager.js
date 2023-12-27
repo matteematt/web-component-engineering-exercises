@@ -3,9 +3,9 @@ import "./ui-page.js";
 const template = `
 	<div id="container">
 		<slot name="contents"></slot>
-		<div id="controls">
+		<span id="controls">
 			<button id="previous">Previous</button>
-<!--			<ui-page id="page"></ui-page>-->
+			<span id="jump-control"></span>
 			<button id="next">Next</button>
 		</div>
 	</div>
@@ -25,6 +25,7 @@ const styles = `
 class UiPager extends HTMLElement {
   static observedAttributes = ["page-count", "current-page", "button-count"];
 
+	// should have made the IDL attributes integers in javascript
   set pageCount(value) {
     this.setAttribute("page-count", value);
   }
@@ -43,7 +44,7 @@ class UiPager extends HTMLElement {
     this.setAttribute("button-count", value);
   }
   get buttonCount() {
-    this.getAttribute("button-count");
+    return this.getAttribute("button-count");
   }
 
   constructor() {
@@ -73,6 +74,11 @@ class UiPager extends HTMLElement {
         );
         this.#processPages();
         break;
+      default:
+        this.currentPage =
+          event.target.getAttribute("data-page") ||
+          (console.warn("Invalid page"), "0");
+				this.#processPages();
     }
   }
 
@@ -84,11 +90,33 @@ class UiPager extends HTMLElement {
     const lowerBound = parseInt(this.currentPage || "0");
     const upperBound = lowerBound + parseInt(this.pageCount || "2");
     const predicateShow = (index) => index >= lowerBound && index < upperBound;
-    const innerPages = this.children;
+    const innerPages = Array.from(this.children);
 
-    Array.from(innerPages).forEach((page, index) => {
+    innerPages.forEach((page, index) => {
       page.hidden = !predicateShow(index);
     });
+
+    this.#processButtons();
+  }
+
+  #processButtons() {
+    const innerPages = Array.from(this.children);
+    const buttonCount = parseInt(this.buttonCount || "5");
+    const lowerBound = Math.max(
+      0,
+      parseInt(this.currentPage || "0") - Math.floor(buttonCount / 2),
+    );
+    const upperBound = Math.min(innerPages.length, lowerBound + buttonCount);
+    const movedLowerBound = Math.max(0, upperBound - buttonCount);
+    const controlDiv = this.shadowRoot.getElementById("jump-control");
+    controlDiv.innerHTML = "";
+    for (let index = movedLowerBound; index < upperBound; index++) {
+      const button = document.createElement("button");
+      button.innerText = index + 1;
+      button.addEventListener("click", this);
+      button.setAttribute("data-page", index);
+      controlDiv.appendChild(button);
+    }
   }
 
   #configureChildren() {
