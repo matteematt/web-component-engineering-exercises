@@ -32,3 +32,6 @@ Build a <ui-avatar> custom element for displaying user avatars.
 * initials - The user's initials.
 * If no image is provided, the initials should be rendered instead.
 * If no initials or image are provided, fallback to a default image.
+
+## Remarks
+Could make the styling a bit better, but I think it is good enough.

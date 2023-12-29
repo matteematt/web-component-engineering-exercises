@@ -10,6 +10,7 @@ const styles = `
 	:host {
 		display: block;
 		contain: content;
+		--initials: '?';
 	}
 
 	:host([hidden]) {
@@ -38,9 +39,9 @@ const styles = `
 	}
 
 	div.initials:after {
-    content: 'rs';
+    content: var(--initials);
     position: relative;
-    right: 188px;
+    right: 210px;
     z-index: 3;
     bottom: 103px;
     font-size: 7rem;
@@ -91,6 +92,7 @@ class UiAvatar extends HTMLElement {
     console.log(initials);
     const initialsContainer = document.createElement("div");
     initialsContainer.classList.add("initials");
+    this.style.setProperty("--initials", `'${initials.toUpperCase()}'`);
     return initialsContainer;
   }
 
