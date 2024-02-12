@@ -64,7 +64,7 @@ class UiAvatar extends HTMLElement {
     }
   }
 
-  attributeChangedCallback(name, oldValue, newValue) {
+  attributeChangedCallback(_, oldValue, newValue) {
     if (oldValue === newValue) return;
     this.#updateContents();
   }
