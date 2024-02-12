@@ -5,8 +5,10 @@ const USER_NAME = "Johnny Smith";
 const template = `
 <div class="container">
 	<ui-avatar></ui-avatar>
-	<p class="title"></p>
-	<slot></slot>
+	<div class="text">
+		<p class="title"></p>
+		<slot></slot>
+	</div>
 </div>
 `;
 
@@ -20,13 +22,22 @@ const styles = `
 		margin: 5px;
 	}
 
-	div {
+	div.container {
 		display: flex;
 		align-items: center;
 	}
 
 	div.user {
 		flex-direction: row-reverse;
+	}
+
+	div.text {
+		flex-flow: column;
+	}
+
+	p.title {
+		font-weight:bold;
+		font-size: 1.2rem;
 	}
 </style>
 `;
@@ -59,6 +70,8 @@ class ChatMessage extends HTMLElement {
 		} else {
 			this.shadowRoot.querySelector("div.container").classList.remove("user");
 		}
+		this.shadowRoot.querySelector("p.title").textContent =
+			this.getAttribute("name");
 		this.#setAvatarAttributes();
 	}
 
