@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <base href="/" />
+    <title>Ex 3 Chat Messages</title>
+
+    <link href="index.css" rel="stylesheet" />
+  </head>
+  <body>
+    <script type="module" src="index.js"></script>
+    <hr />
+    <chat-thread name="Daisy Duke">
+      <chat-message
+        ><p>Do you have a record of meeting from last Friday?</p>
+      </chat-message>
+      <chat-message is-user
+        ><p>Yeah, do you want me to send them over?</p>
+      </chat-message>
+      <chat-message
+        ><p>
+          No, that is ok. But I would like to clarify what Mark said about
+          whether the monthly report has been completed?
+        </p>
+      </chat-message>
+      <chat-message is-user><p>One sec, let me check</p> </chat-message>
+      <chat-message is-user
+        ><p>
+          He said we're still waiting on finance to sign off the commissions
+          payouts, but everything is done on our end.
+        </p>
+      </chat-message>
+    </chat-thread>
+  </body>
+</html>
