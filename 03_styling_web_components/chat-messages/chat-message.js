@@ -53,7 +53,7 @@ class ChatMessage extends HTMLElement {
 		this.#processAttributes();
 	}
 
-	attributeChangedCallback(name, oldValue, newValue) {
+	attributeChangedCallback(_, oldValue, newValue) {
 		if (oldValue === newValue) return;
 		this.#processAttributes();
 	}

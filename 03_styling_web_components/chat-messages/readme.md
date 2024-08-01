@@ -36,3 +36,7 @@ If you wish to submit your exercise solution for review:
 - Build a <chat-thread> component that renders a sequence of messages.
     - Use Container Size Queries to direct the messages to layout in normal or compact mode.
     - Use CSS Custom Properties on messages to determine whether to display as from user, from contact, or important.
+
+## Ouput
+
+I didn't end up meeting every criteria but I have all of the main logic working. It just requires wiring through all of the css variables to make compact mode. I ended up having a large break between getting time on the course during this activity so I have decided to finish the main points and move on.
